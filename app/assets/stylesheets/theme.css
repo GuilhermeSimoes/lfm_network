@@ -64,13 +64,6 @@ div.h-centered {
   height:240px;
 }
 
-label.label {
-  width:50px;
-  float:left;
-  padding-right:10px;
-  text-align:right;
-}
-
 input.input {
   width:400px;
   font-size:30px;
@@ -83,4 +76,18 @@ input.input {
   box-shadow:0 0 10px rgba(0,0,0,0.8);
   -moz-box-shadow:0 0 10px rgba(0,0,0,0.8);
   -webkit-box-shadow:0 0 10px rgba(0,0,0,0.8);
+}
+
+#partialbox {
+  position:relative;
+}
+
+#partialbox img {
+  position:absolute;
+  right:-310px;
+  top:-200px;
+}
+
+#partialimage {
+  padding-top:20px;
 }

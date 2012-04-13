@@ -1,3 +1,7 @@
+<audio>
+	<source src="audio/click.wav"></source>
+</audio>
+
 <div class="h-center-wrapper">
 </div>
 <div class="h-centered">
@@ -5,11 +9,17 @@
   <div class="w-center-wrapper">
     <div class="w-centered">
 
-      <%= form_tag fetcher_get_artist_path, :remote => true, :class => 'form', :id => 'search' do %>
+      <%= form_tag fetcher_get_user_path, :remote => true, :class => 'form', :id => 'search' do %>
         <div id="partialbox">
           <%= render :partial => 'box'  %>
+          
+          <%=	image_tag('label.png', :alt => 'Press enter to search!') %>
         </div>
       <% end %>
+      
+      <div id="partialimage">
+        <%= render :partial => 'image'  %>
+      </div>
     </div>
   </div>
 </div>
