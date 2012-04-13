@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LfmNetwork</title>
+<meta charset="utf-8">
+
+<meta name="keywords" content="last.fm, music, friends, google, maps" />
+<meta name="description" content="An application to obtain and visualize a network of Last.fm friends." />
+<meta name="application-name" content="Last.fm Network" />
+<meta name="author" content="Mariana Alfafar & Friends" />
+
+  <title>Last.fm Network</title>
+  <%= favicon_link_tag %>
+  
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div id="header">
+    <h1><a href="/">Last.fm Network</a></h1>
+  </div>
 
+  <div id="content">
+		<%= yield %>
+	</div>
+  
+  <div id="footer">
+	</div>
+
+  <%= javascript_include_tag "application" %>
 </body>
 </html>
+
+
+
+
+	

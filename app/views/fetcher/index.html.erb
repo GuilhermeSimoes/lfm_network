@@ -1,0 +1,15 @@
+<div class="h-center-wrapper">
+</div>
+<div class="h-centered">
+
+  <div class="w-center-wrapper">
+    <div class="w-centered">
+
+      <%= form_tag fetcher_get_artist_path, :remote => true, :class => 'form', :id => 'search' do %>
+        <div id="partialbox">
+          <%= render :partial => 'box'  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
