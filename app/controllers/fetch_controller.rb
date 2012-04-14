@@ -1,0 +1,47 @@
+class FetchController < ApplicationController
+  def index
+    @placeholder = "Type the name of a user..."
+  end
+  
+  def user
+    url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{params[:q].gsub(' ','+')}&api_key=#{API_KEY}"
+    
+    respond_to do |format|
+      format.xml {
+        begin
+          @xml = Nokogiri::XML(open(url))
+        rescue
+          render xml: { :error => 'Not found' }, :status => 400
+        else
+          render xml: @xml
+        end
+      }
+      
+      format.html {
+        begin
+          doc = Nokogiri::XML(open(url))
+        rescue
+          @placeholder = "That user does not exist."
+          render 'index'
+        else
+          status = doc.xpath('lfm/@status').text
+          if status == 'ok'          
+            #doc.xpath("lfm/artist/image").each do |img|
+            #	puts img
+            #end
+            #@bio = Sanitize.clean(doc.xpath('lfm/artist/bio').text[0..-125])
+            
+            @q = doc.xpath('lfm/user/name').text
+            
+            @image = doc.xpath('lfm/user/image[@size="large"]').text
+            
+            render 'user'
+          else
+            @placeholder = "That user does not exist."
+            render 'index'
+          end
+        end
+      }
+    end
+  end
+end
