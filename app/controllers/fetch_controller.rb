@@ -4,12 +4,17 @@ class FetchController < ApplicationController
   end
   
   def user
-    username = params[:q].gsub(' ','+')
-    get_info_url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{username}&api_key=#{API_KEY}"
-    get_friends_url = "http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=#{username}&api_key=#{API_KEY}"
-    
     respond_to do |format|
+      format.html {
+        @placeholder = "Please enable javascript..."
+        render 'index'
+      }
+      
       format.xml {
+        username = params[:q].gsub(' ','+')
+        get_info_url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{username}&api_key=#{API_KEY}"
+        get_friends_url = "http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=#{username}&api_key=#{API_KEY}"
+        
         begin
           info_xml = Nokogiri::XML(open(get_info_url))
           friends_xml = Nokogiri::XML(open(get_friends_url))
@@ -34,32 +39,6 @@ class FetchController < ApplicationController
           end
         else
           render xml: builder.to_xml
-        end
-      }
-      
-      format.html {
-        begin
-          doc = Nokogiri::XML(open(get_info_url))
-        rescue
-          @placeholder = "That user does not exist."
-          render 'index'
-        else
-          status = doc.xpath('lfm/@status').text
-          if status == 'ok'
-            
-            @q = doc.at_xpath('lfm/user/name').text
-            
-            doc.xpath('lfm/user/image').each do |image|
-              unless image.nil?
-                @image = image.text
-              end
-            end
-            
-            render 'user'
-          else
-            @placeholder = "That user does not exist."
-            render 'index'
-          end
         end
       }
     end
