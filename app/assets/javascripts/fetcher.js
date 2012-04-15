@@ -34,8 +34,12 @@ $('#search')
         $("#partialimage").fadeIn("normal");
     });
   })
-  .bind("ajax:error", function(evt, xhr, status, error){
-    $("#q").val("").attr("placeholder", "User not found.");
+  .bind("ajax:error", function(evt, xhr, status, error){    
+    if (error == "Bad Request")
+      $("#q").val("").attr("placeholder", "User not found.");
+    else
+      $("#q").val("").attr("placeholder", "Connection to Last.fm failed.");
+      
     $("#loader").fadeOut("normal", function() {
         $("#partialbox").fadeIn("normal");
     });
