@@ -9,19 +9,15 @@
   <div class="w-center-wrapper">
     <div class="w-centered">
     
-      <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'search', :class => 'form' do %>
-        <div id="partialbox">
-          <%= render :partial => 'box'  %>
-        </div>
+      <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search' do %>
+        <%= render :partial => 'box'  %>
       <% end %>
       
       <%=	image_tag 'ajax-loader.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
       
-      <div id="partialimage">
-        <%= render :partial => 'image'  %>
-      </div>
+      <div id="partialimage"></div>
       
-      <span id="asd"></span>
+      <div id="chart"></div>
     </div>
   </div>
 </div>

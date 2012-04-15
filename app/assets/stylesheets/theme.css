@@ -3,18 +3,20 @@ html,body,h1 {
   margin:0;
 }
 
-html, body {
+html {
+  overflow-y:scroll; /* Easiest way to avoid the side jump when the scrollbar appears but this way the scrollbar is always visible.. */
   height:100%;
-  min-height:100%;
 }
 
 body {
+  height:100%;
   position:relative;
   min-width:600px;
   font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 #header {
+  position:relative;
   height:70px;
   line-height:70px;
   width:100%;
@@ -26,9 +28,29 @@ body {
   text-decoration:none;
 }
 
-#header h1{
+#header h1 {
   text-align:center;
   font-size:40px;
+}
+
+#header-search {
+  position:absolute;
+  top:0px;
+  right:25px;
+}
+
+#body-search input {
+  width:400px;
+  font-size:30px;
+  padding-left:5px;
+  padding-right:5px;
+  border:solid 1px #999;
+  border-radius:8px;
+  -moz-border-radius:8px;
+  -webkit-border-radius:8px;
+  box-shadow:0 0 10px rgba(0,0,0,0.8);
+  -moz-box-shadow:0 0 10px rgba(0,0,0,0.8);
+  -webkit-box-shadow:0 0 10px rgba(0,0,0,0.8);
 }
 
 #content {
@@ -63,32 +85,3 @@ div.h-centered {
   clear:both;
   height:240px;
 }
-
-input.input {
-  width:400px;
-  font-size:30px;
-  padding-left:5px;
-  padding-right:5px;
-  border:solid 1px #999;
-  border-radius:8px;
-  -moz-border-radius:8px;
-  -webkit-border-radius:8px;
-  box-shadow:0 0 10px rgba(0,0,0,0.8);
-  -moz-box-shadow:0 0 10px rgba(0,0,0,0.8);
-  -webkit-box-shadow:0 0 10px rgba(0,0,0,0.8);
-}
-
-#partialbox {
-  position:relative;
-}
-
-#partialbox img {
-  position:absolute;
-  right:-310px;
-  top:-200px;
-}
-
-#partialimage {
-  padding-top:20px;
-}
-

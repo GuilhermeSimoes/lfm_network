@@ -19,13 +19,9 @@ class FetchController < ApplicationController
           info_xml = Nokogiri::XML(open(get_info_url))
           friends_xml = Nokogiri::XML(open(get_friends_url))
           builder = Nokogiri::XML::Builder.new do |xml|
-            xml.combined {
-              xml.userInfo {
-                xml << info_xml.at_xpath('//user').to_xml.to_str
-              }
-              xml.friendsInfo {
-                xml << friends_xml.at_xpath('//friends').to_xml.to_str
-              }
+            xml.lfm {
+              xml << info_xml.at_xpath('//user').to_xml.to_str
+              xml << friends_xml.at_xpath('//friends').to_xml.to_str
             }
           end
         rescue Exception => e
