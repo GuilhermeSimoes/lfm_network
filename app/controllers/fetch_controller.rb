@@ -33,7 +33,11 @@ class FetchController < ApplicationController
             
             @q = doc.xpath('lfm/user/name').text
             
-            @image = doc.xpath('lfm/user/image[@size="large"]').text
+            doc.xpath('lfm/user/image').each do |image|
+              unless image.nil?
+                @image = image.text
+              end
+            end
             
             render 'user'
           else
