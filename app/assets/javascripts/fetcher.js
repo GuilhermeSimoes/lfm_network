@@ -3,9 +3,10 @@ var audio = document.getElementsByTagName("audio")[0];
 $('#search')
   .submit(function(){
     audio.play();
-    $("#partialbox").fadeOut("normal");
-    $("#partialimage").fadeOut("normal", function() {
+    $("#partialbox").fadeOut("normal", function() {
         $("#loader").fadeIn("normal");
+    });
+    $("#partialimage").fadeOut("normal", function() {
         $("#partialimage").empty();
     });
   })
