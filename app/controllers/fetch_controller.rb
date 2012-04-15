@@ -4,12 +4,25 @@ class FetchController < ApplicationController
   end
   
   def user
-    url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{params[:q].gsub(' ','+')}&api_key=#{API_KEY}"
+    username = params[:q].gsub(' ','+')
+    get_info_url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{username}&api_key=#{API_KEY}"
+    get_friends_url = "http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=#{username}&api_key=#{API_KEY}"
     
     respond_to do |format|
       format.xml {
         begin
-          @xml = Nokogiri::XML(open(url))
+          info_xml = Nokogiri::XML(open(get_info_url))
+          friends_xml = Nokogiri::XML(open(get_friends_url))
+          builder = Nokogiri::XML::Builder.new do |xml|
+            xml.combined {
+              xml.userInfo {
+                xml << info_xml.at_xpath('//user').to_xml.to_str
+              }
+              xml.friendsInfo {
+                xml << friends_xml.at_xpath('//friends').to_xml.to_str
+              }
+            }
+          end
         rescue Exception => e
           # puts e.message
           # puts e.backtrace.join("\n")
@@ -20,25 +33,21 @@ class FetchController < ApplicationController
             render xml: { :error => 'Connection to Last.fm failed.' }, :status => 500
           end
         else
-          render xml: @xml
+          render xml: builder.to_xml
         end
       }
       
       format.html {
         begin
-          doc = Nokogiri::XML(open(url))
+          doc = Nokogiri::XML(open(get_info_url))
         rescue
           @placeholder = "That user does not exist."
           render 'index'
         else
           status = doc.xpath('lfm/@status').text
-          if status == 'ok'          
-            #doc.xpath("lfm/artist/image").each do |img|
-            #	puts img
-            #end
-            #@bio = Sanitize.clean(doc.xpath('lfm/artist/bio').text[0..-125])
+          if status == 'ok'
             
-            @q = doc.xpath('lfm/user/name').text
+            @q = doc.at_xpath('lfm/user/name').text
             
             doc.xpath('lfm/user/image').each do |image|
               unless image.nil?

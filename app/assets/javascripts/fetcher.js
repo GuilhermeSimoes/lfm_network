@@ -4,35 +4,35 @@ $('#search')
   .submit(function(){
     audio.play();
     $("#partialbox").fadeOut("normal", function() {
-        $("#loader").fadeIn("normal");
+      $("#loader").fadeIn("normal");
     });
     $("#partialimage").fadeOut("normal", function() {
-        $("#partialimage").empty();
+      $("#partialimage").empty();
     });
   })
   .bind("ajax:success", function(evt, xml, status, xhr){
-  
-    var status = $(xml).find('lfm').attr('status');
+    var xml = $(xml);
+    var img = "";
+    var content;
     
-    if (status == 'failed')
-      $("#q").val("").attr("placeholder", "User not found.");
-    else {
-      var img = "";
-      var content;
-      $(xml).find('image').each(function(){
-        content = $(this).text();
-        if (content != "")
-          img = content;
-      });
-      
-      if (!img == ""){
-        $("#partialimage").append("<img alt='User image' src='"+img+"'>");
-      }
+    //console.log(xml);
+    
+    $('userinfo image', xml).each(function(){
+      //var size = $(this).attr('size');
+      //console.log(size);
+    
+      content = $(this).text();
+      if (content != "")
+        img = content;
+    });
+    
+    if (img != ""){
+      $("#partialimage").append("<img alt='User image' src='"+img+"'>");
     }
   
     $("#loader").fadeOut("normal", function() {
-        $("#partialbox").fadeIn("normal");
-        $("#partialimage").fadeIn("normal");
+      $("#partialbox").fadeIn("normal");
+      $("#partialimage").fadeIn("normal");
     });
   })
   .bind("ajax:error", function(evt, xhr, status, error){    
@@ -41,7 +41,9 @@ $('#search')
     else
       $("#q").val("").attr("placeholder", "Connection to Last.fm failed.");
       
+    console.log(status+"\n"+error);
+      
     $("#loader").fadeOut("normal", function() {
-        $("#partialbox").fadeIn("normal");
+      $("#partialbox").fadeIn("normal");
     });
   });
