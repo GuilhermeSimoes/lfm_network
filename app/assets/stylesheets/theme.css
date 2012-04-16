@@ -33,6 +33,18 @@ body {
   font-size:40px;
 }
 
+#user-nav {
+  position:absolute;
+  top:0px;
+  left:25px;
+}
+
+#user-nav img {
+  vertical-align:middle;
+  margin-right:5px;
+  border:solid 1px #111111;
+}
+
 #header-search {
   position:absolute;
   top:0px;

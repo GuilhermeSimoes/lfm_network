@@ -86,8 +86,6 @@ GEM
     rake (0.8.7)
     rdoc (3.12)
       json (~> 1.4)
-    sanitize (2.0.3)
-      nokogiri (>= 1.4.4, < 1.6)
     sass (3.1.15)
     sass-rails (3.1.4)
       actionpack (~> 3.1.0)
@@ -126,7 +124,6 @@ DEPENDENCIES
   pg
   rails (= 3.1.4)
   rake (= 0.8.7)
-  sanitize
   sass-rails (= 3.1.4)
   sqlite3
   thin

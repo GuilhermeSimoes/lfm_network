@@ -5,15 +5,13 @@ function success(evt, xml, status, xhr){
 
   console.log(xml);
   
-  // var img = "";
-  // var content;
-  // $('lfm > user image', xml).each(function(){
-    // var size = $(this).attr('size');
-    // console.log(size);
-    // content = $(this).text();
-    // if (content != "")
-      // img = content;
-  // });  
+  var username = $('lfm > user name', xml).text(),
+      url = $('lfm > user url', xml).text(),
+      img = $('lfm > user image[size="small"]', xml).text();
+  
+  
+  $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>')
+  
   // if (img != ""){
     // $("#partialimage").append("<img alt='User image' src='"+img+"'>");
   // }
@@ -32,7 +30,7 @@ function success(evt, xml, status, xhr){
   //var xml_nodes = $('lfm friends user', xml)
   //console.log(xml_nodes.length);
     
-  //selectAll("*")[0]
+  //.selectAll("*")[0]
   var nodes = self.nodes = d3.select(xml),
     links = self.links = nodes.slice(1).map(function(d) {
       return {source: d, target: d.parentNode};
@@ -78,7 +76,7 @@ function success(evt, xml, status, xhr){
 
   $("#loader").fadeOut("normal", function() {
     $("#header-search").fadeIn("normal");
-    $("#partialimage").fadeIn("normal");
+    $("#user-nav").fadeIn("normal");
     $("#chart").fadeIn("normal");
   });
 }
@@ -113,8 +111,8 @@ $('#header-search')
       $(this).children('input').val("");
       $("#loader").fadeIn("normal");
     });
-    $("#partialimage").fadeOut("normal", function() {
-      $("#partialimage").empty();
+    $("#user-nav").fadeOut("normal", function() {
+      $("#user-nav").empty();
     });
     $("#chart").fadeOut("normal", function() {
       $("#chart").empty();
