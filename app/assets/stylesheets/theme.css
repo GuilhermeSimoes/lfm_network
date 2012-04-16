@@ -45,6 +45,10 @@ body {
   border:solid 1px #111111;
 }
 
+#user-nav a {
+  font-size:22px;
+}
+
 #header-search {
   position:absolute;
   top:0px;
