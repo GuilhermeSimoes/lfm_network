@@ -18,41 +18,57 @@ body {
 #header {
   position:relative;
   height:70px;
-  line-height:70px;
   width:100%;
-  color:#123456
-}
-
-#header a:link, #header a:visited {
-  color:#123456;
-  text-decoration:none;
 }
 
 #header h1 {
   text-align:center;
   font-size:40px;
+  line-height:70px;
+}
+
+#header a:link, #header a:visited {
+  color:#000000;
+  text-decoration:none;
 }
 
 #user-nav {
   position:absolute;
-  top:0px;
+  top:18px;
   left:25px;
+  height:32px;
+  line-height:32px;
 }
 
 #user-nav img {
   vertical-align:middle;
   margin-right:5px;
-  border:solid 1px #111111;
+  border:solid 1px #000000;
+  max-height:30px;
 }
 
 #user-nav a {
+  display:block;
   font-size:22px;
+  padding:3px;
+}
+
+#user-nav a:hover {
+  background-color:#eeeeee;
+  border-color:#eeeeee;
+  border-width:3px;
+  border-style:solid;
+  padding:0px;
 }
 
 #header-search {
   position:absolute;
-  top:0px;
+  top:25px;
   right:25px;
+}
+
+#header-search input {
+  width:180px;
 }
 
 #body-search input {
