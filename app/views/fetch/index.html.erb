@@ -10,7 +10,7 @@
     <div class="w-centered">
     
       <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search' do %>
-        <%= render :partial => 'box'  %>
+        <%= text_field_tag :q, nil, :id => nil, :autofocus => "true", :placeholder => @placeholder %><%-# :type => "search"-%>
       <% end %>
       
       <%=	image_tag 'ajax-loader.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
