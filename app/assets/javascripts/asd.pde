@@ -39,7 +39,7 @@ void addPoints() {
   draw();
 }
 
-int drawGraph(arr){
+void drawGraph(arr){
 
   for (int i=0;i<arr.length(); i++){
     points.add(new Point(50,(i+1)*10));
@@ -47,6 +47,9 @@ int drawGraph(arr){
   }
   
   draw();
-  
-  return arr.length
+}
+
+void clear(){
+  points.clear();
+  draw();
 }

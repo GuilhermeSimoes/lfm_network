@@ -21,7 +21,7 @@ function success(evt, xml, status, xhr){
   $("#loader").fadeOut("normal", function() {
     $("#header-search").fadeIn("normal");
     $("#user-nav").fadeIn("normal");
-    $("#chart").fadeIn("normal");
+    $("#canvas").fadeIn("normal");
   });
 }
 
@@ -58,8 +58,11 @@ $('#header-search')
     $("#user-nav").fadeOut("normal", function() {
       $("#user-nav").empty();
     });
-    $("#chart").fadeOut("normal", function() {
-      $("#chart").empty();
+    $("#canvas").fadeOut("normal", function() {
+      var pjs = Processing.getInstanceById('canvas');
+      if (pjs != null){
+        pjs.clear();
+      }
     });
   })
   .bind("ajax:success", success)
