@@ -18,10 +18,29 @@ class FetchController < ApplicationController
         begin
           info_xml = Nokogiri::XML(open(get_info_url))
           friends_xml = Nokogiri::XML(open(get_friends_url))
+
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.lfm {
               xml << info_xml.at_xpath('//user').to_xml.to_str
-              xml << friends_xml.at_xpath('//friends').to_xml.to_str
+              
+              xml.friends {
+                friends_xml.xpath('lfm/friends/user').each do |user|
+                
+                  xml.user {
+                
+                    tasteometer_url = "http://ws.audioscrobbler.com/2.0/?method=tasteometer.compare&type1=user&type2=user&value1=#{username}&value2=#{user.at_xpath('name').text}&api_key=#{API_KEY}"
+                    taste_xml = Nokogiri::XML(open(tasteometer_url))
+                    xml << taste_xml.at_xpath('//score').to_xml.to_str
+                    
+                    xml << user.at_xpath('name').to_xml.to_str
+                    xml << user.at_xpath('realname').to_xml.to_str
+                    xml << user.at_xpath('url').to_xml.to_str
+                  }
+                  
+                end
+              }
+              
+              
             }
           end
         rescue Exception => e
