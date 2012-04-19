@@ -1,7 +1,6 @@
 LfmNetwork::Application.routes.draw do
   post "fetch/user"
-  get "fetch/user" => 'fetch#index'
-  get "fetch/index"
+  get "fetch/user"
 
   root :to => 'fetch#index'
 end

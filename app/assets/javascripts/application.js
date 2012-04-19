@@ -6,5 +6,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require processing-1.3.6
+//= require d3.v2.min
 //= require fetcher

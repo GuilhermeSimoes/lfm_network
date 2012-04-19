@@ -2,21 +2,17 @@
 	<source src="audio/click.wav"></source>
 </audio>
 
-<div class="h-center-wrapper">
-</div>
-<div class="h-centered">
 
-  <div class="w-center-wrapper">
-    <div class="w-centered">
+<div class="center-wrapper">
+  <div id="wrapper" class="centered idier">
     
-      <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search' do %>
-        <%= text_field_tag :q, nil, :id => nil, :autofocus => "true", :placeholder => @placeholder %>
-        <%-# :type => "search" -%>
-      <% end %>
-      
-      <%=	image_tag 'ajax-loader.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
-      
-      <canvas id="canvas" data-processing-sources="/assets/asd.pde"></canvas>
-    </div>
+    <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search' do %>
+      <%= text_field_tag :q, nil, :id => nil, :autofocus => "true", :placeholder => @placeholder %>
+      <%-# :type => "search" -%>
+    <% end %>
+    
+    <%=	image_tag 'ajax-loader.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
+    
+    <div id="canvas"></div>
   </div>
 </div>
