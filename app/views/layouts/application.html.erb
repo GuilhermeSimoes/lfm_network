@@ -6,11 +6,10 @@
   <meta name="keywords" content="last.fm, music, friends, google, maps" />
   <meta name="description" content="An application to obtain and visualize a network of Last.fm friends." />
   <meta name="application-name" content="Last.fm Network" />
-  <meta name="author" content="Mariana Alfafar & Friends" />
+  <meta name="author" content="Guilherme Simoes" />
 
   <title>Last.fm Network</title>
   <%= favicon_link_tag %>
-  
   <%= stylesheet_link_tag    "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -18,7 +17,7 @@
 
   <div id="header">
     <div id="user-nav"></div>
-    <h1><a href="/">Last.fm Network</a></h1>
+    <%= link_to image_tag('logo-red.png', :alt => "Last.fm Network"), root_path, :title => "Last.fm Network", :id => "logo" %>
     <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'header-search', :style => "display: none" do %>
       <%= text_field_tag :q, nil, :id => nil, :placeholder => "Type the name of a user..." %>
     <% end %>

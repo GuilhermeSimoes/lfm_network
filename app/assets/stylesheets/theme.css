@@ -13,7 +13,7 @@ body {
   position:relative;
   min-width:600px;
   font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  background-color:#EEEEEE;
+  background-color:#E6E6E6;
   background-image:url('background.jpg');
 }
 
@@ -23,15 +23,11 @@ body {
   width:100%;
 }
 
-#header h1 {
-  text-align:center;
-  font-size:40px;
-  line-height:70px;
-}
-
-#header a:link, #header a:visited {
-  color:#000000;
-  text-decoration:none;
+#logo {
+  position: absolute;
+  top:10px;
+  left:50%;
+  margin-left:-175px;
 }
 
 #user-nav {
@@ -52,25 +48,32 @@ body {
 #user-nav a {
   display:block;
   font-size:22px;
-  padding:3px;
+  padding:2px;
+}
+
+#user-nav a:link, #user-nav a:visited {
+  color:#A72027;
+  text-decoration:none;
 }
 
 #user-nav a:hover {
-  background-color:#eeeeee;
-  border-color:#eeeeee;
-  border-width:3px;
+  border-color:#EEEEEE;
+  border-width:2px;
   border-style:solid;
-  padding:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+  padding-left:0px;
 }
 
 #header-search {
   position:absolute;
-  top:25px;
+  top:20px;
   right:25px;
 }
 
 #header-search input {
-  width:180px;
+  width:200px;
+  font-size:17px;
 }
 
 #body-search input {
@@ -132,8 +135,8 @@ line.link {
   stroke: #ccc;
 }
 
-circle.node {
+/*circle.node {
   fill: #000;
   stroke: #fff;
   stroke-width:1.5px;
-}
+}*/
