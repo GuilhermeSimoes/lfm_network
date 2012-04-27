@@ -2,7 +2,7 @@
 
 Projecto no âmbito das Tecnologias para a Web Social. Tecnologias usadas:
 
-* APIs (Last.fm e Google Maps)
+* Last.fm API
 * HTML + CSS
-* Javascript
+* Javascript (jQuery e d3.js)
 * Ruby on Rails
