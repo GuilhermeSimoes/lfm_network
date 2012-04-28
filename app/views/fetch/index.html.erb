@@ -1,18 +1,17 @@
-<audio>
+<noscript>
+<p>JavaScript is turned off in your web browser.</p>
+<p>This website is fully dependent on Javascript so please turn it on and then refresh this page.</p>
+</noscript>
+
+<audio style="display:none">
 	<source src="audio/click.wav"></source>
 </audio>
 
+<%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search', :style => "display: none" do %>
+  <%= text_field_tag :q, nil, :id => nil, :autofocus => "true", :placeholder => @placeholder %>
+  <%-# :type => "search" -%>
+<% end %>
 
-<div class="center-wrapper">
-  <div id="wrapper" class="centered idier">
-    
-    <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search' do %>
-      <%= text_field_tag :q, nil, :id => nil, :autofocus => "true", :placeholder => @placeholder %>
-      <%-# :type => "search" -%>
-    <% end %>
-    
-    <%=	image_tag 'ajax-loader.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
-    
-    <div id="canvas"></div>
-  </div>
-</div>
+<%=	image_tag 'wait.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
+
+<div id="canvas"></div>
