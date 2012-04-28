@@ -1,15 +1,9 @@
 class FetchController < ApplicationController
   def index
-    @placeholder = "Type the name of a user..."
   end
   
   def user
-    respond_to do |format|
-      format.html {
-        @placeholder = "Please enable javascript..."
-        render 'index'
-      }
-      
+    respond_to do |format|      
       format.xml {
         username = params[:q].gsub(' ','+')
         get_info_url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{username}&api_key=#{API_KEY}"

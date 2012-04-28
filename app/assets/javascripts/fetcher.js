@@ -1,5 +1,9 @@
 var audio = document.getElementsByTagName("audio")[0];
 
+$(document).ready(function() {
+  $("#body-search").show();
+});
+
 function success(evt, xml, status, xhr){
   xml = $(xml);
 
@@ -11,8 +15,8 @@ function success(evt, xml, status, xhr){
   
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
   
-  var w = screen.width-80,
-      h = screen.height-240,
+  var w = screen.width-20,
+      h = screen.height-200,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
       c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl),
@@ -32,23 +36,20 @@ function success(evt, xml, status, xhr){
   
   var nodes = [];
   for (i=0; i < n; i++) {
-    nodes.push({"taste": $('score', xml).eq(i).text()});
-    console.log($('score', xml).eq(i).text());
+    nodes.push({"taste": $("score", xml).eq(i).text(), "name": $("name", xml).eq(i).text()});
   }
-  self.nodes = nodes;
   
   var links = [];
   for (i=1; i < n; i++) {
     links.push({"source": nodes[i], "target": nodes[0]});
   }
-  self.links = links;
   
   force
     .nodes(nodes)
     .links(links)
     .start();
       
-  var link = canvas.selectAll("line.link")
+  var link = canvas.selectAll("line")
     .data(links)
     .enter().append("svg:line")
     .attr("class", "link")
@@ -57,17 +58,49 @@ function success(evt, xml, status, xhr){
     .attr("x2", function(d) { return d.target.x; })
     .attr("y2", function(d) { return d.target.y; });
       
-  var node = canvas.selectAll("circle.node")
+  var node = canvas.selectAll("circle")
     .data(nodes)
-    .enter().append("svg:circle")
+    .enter()/*.append("svg:a")
+            .attr("xlink:href", function(d) { return "http://localhost:3000"; })*/
+    .append("svg:circle")
     .attr("class", "node")
     .attr("cx", function(d) { return d.x })
     .attr("cy", function(d) { return d.y })
+    .attr("r", function(d) { return r(d.taste) })
     .attr("stroke-width", "none")
     .attr("fill", function() { return c(Math.random()) })
     .attr("fill-opacity", .5)
-    .attr("r", function(d) { return r(d.taste) })
+    .on('mouseover', function() {
+                      var circle = d3.select(this);
+                      circle.attr("fill-opacity", 0.7);
+                    })
+    .on("mouseout", function() {
+                      var circle = d3.select(this);
+                      circle.attr("fill-opacity", 0.5);
+                    })
     .call(force.drag);
+    
+  /*canvas.append("text")
+    .attr("class", "title")
+    .attr("dy", ".71em")
+    .attr("cx", 1)
+    .attr("cy", 1)
+    .text(2000);
+    
+  node.append("text")
+    .attr("text-anchor", "middle")
+    .attr("dy", "1em")
+    .text(function(d) { return d.name.substring(0, d.r / 3); });
+    
+  node.selectAll("text")
+    .data(nodes)
+    .enter().append("text")
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle")
+    .text("asd"); */
+    
+  node.append("title")
+    .text(function(d) { return d.name; });
 
   force.on("tick", function() {
     nodes[0].x = w / 2;
@@ -81,12 +114,12 @@ function success(evt, xml, status, xhr){
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   });
+  
  
-  $("#wrapper").toggleClass("idier ider");
   $("#loader").fadeOut("normal", function() {
-    $("#header-search").fadeIn("normal");
     $("#user-nav").fadeIn("normal");
-    $("#canvas").fadeIn("normal");
+    $("#header-search").fadeIn("normal");
+    $("#canvas").fadeIn("slow");
   });
 }
 
@@ -126,7 +159,6 @@ $('#header-search')
     });
     $("#canvas").fadeOut("normal", function() {
       $("#canvas").empty();
-      $("#wrapper").toggleClass("idier ider");
     });
   })
   .bind("ajax:success", success)
