@@ -21,11 +21,21 @@ body {
   position:relative;
   height:70px;
   width:100%;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #logo {
   position: absolute;
-  top:10px;
+  top:1em;
   left:50%;
   margin-left:-175px;
 }
@@ -57,9 +67,11 @@ body {
 }
 
 #user-nav a:hover {
+  color:#E52C35;
+  background-color:#EEEEEE;
   border-color:#EEEEEE;
-  border-width:2px;
-  border-style:solid;
+  background-color:rgba(250,250,250,0.6);
+  border: 2px solid rgba(250,250,250,0.1);
   padding-top:0px;
   padding-bottom:0px;
   padding-left:0px;
@@ -72,15 +84,40 @@ body {
 }
 
 #header-search input {
-  width:200px;
-  font-size:17px;
+  width:14em;
+  font-size:1.1em;
+}
+
+#content {
+}
+
+#footer {
+}
+
+noscript {
+  position:absolute;
+  top:30%;
+  left:50%;
+  width:20em;
+  margin-left:-10em;
+  font-size:1.4em;
+}
+
+#loader {
+  padding-top:50%;
+  margin-top:-75px;
+}
+
+#body-search {
+  padding-top:50%;
+  margin-top:-22px;
 }
 
 #body-search input {
-  width:400px;
-  font-size:30px;
-  padding-left:5px;
-  padding-right:5px;
+  width:13em;
+  font-size:2em;
+  padding-left:0.3em;
+  padding-right:0.3em;
   border:solid 1px #999;
   border-radius:8px;
   -moz-border-radius:8px;
@@ -90,14 +127,8 @@ body {
   -webkit-box-shadow:0 0 10px rgba(0,0,0,0.8);
 }
 
-#content {
-  margin-top:-70px;
-  padding-left:40px;
-  padding-right:40px;
-  height:100%;
-}
-
-#footer {
+#canvas {
+  padding-top:20px;
 }
 
 div.center-wrapper {
@@ -107,29 +138,13 @@ div.center-wrapper {
 
 div.centered {
   display:inline-block;
-  /* text-align:left; */
+  /*text-align:left;*/
   line-height:normal;
 }
 
-div.ider {
-  padding-top:8em;
+text {
+  font: 10px sans-serif;
 }
-
-div.idier {
-  padding-top:16em;
-}
-
-/*div.h-center-wrapper {
-  float:left;
-  height:50%;
-  margin-bottom:-100px;
-}
-
-div.h-centered {
-  position:relative;
-  clear:both;
-  height:240px;
-}*/
 
 line.link {
   stroke: #ccc;
