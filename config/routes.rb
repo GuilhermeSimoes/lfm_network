@@ -1,6 +1,7 @@
 LfmNetwork::Application.routes.draw do
-  post "fetch/user"
-
+  post "fetch_user" => 'fetch#user', :as => 'fetch_user'
+  get "/fetch" => 'fetch#user'
+  
   root :to => 'fetch#index'
   
   match '*uri' => redirect('/')

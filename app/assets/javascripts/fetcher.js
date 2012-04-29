@@ -1,12 +1,101 @@
 var audio = document.getElementsByTagName("audio")[0];
 
+
 $(document).ready(function() {
-  $("#body-search").show();
+  var username = $("#user-page").val();
+  
+  if (username == ""){
+    $("#body-search").show();
+  }
+  else {
+    $("#loader").show();
+    
+    $.ajax({
+      data : { user : username }
+    }).success(function jsSuccess(data, textStatus, jqXHR){
+      drawGraph(data);
+    }).error(function jsError(jqXHR, textStatus, errorThrown){
+      handleError(errorThrown);
+    });
+    
+    history.replaceState({user:username}, username+"'s Network");
+  }
 });
 
-function success(evt, xml, status, xhr){
-  xml = $(xml);
 
+$('#body-search')
+  .submit(function(e){
+    audio.play();
+    var username = $("#body-search").children('input').val();
+    $("#body-search").fadeOut("normal", function() {
+      $(this).children('input').val("");
+      $("#loader").fadeIn("normal");
+    });
+  })
+  .bind("ajax:success", clickSuccess)
+  .bind("ajax:error", clickError);
+
+  
+$('#header-search')
+  .submit(function(e){
+    audio.play();
+    var username = $("#header-search").children('input').val();
+    $("#header-search").fadeOut("normal", function() {
+      $(this).children('input').val("");
+      $("#loader").fadeIn("normal");
+    });
+    $("#user-nav").fadeOut("normal", function() {
+      $("#user-nav").empty();
+    });
+    $("#canvas").fadeOut("normal", function() {
+      $("#canvas").empty();
+    });
+  })
+  .bind("ajax:success", clickSuccess)
+  .bind("ajax:error", clickError);
+  
+/*$('#header-search')
+  .submit(function(){
+    yada yada
+  })
+  .bind("ajax:success", clickSuccess)
+  .bind("ajax:error", clickError);*/
+
+
+function clickSuccess(evt, data, status, xhr){
+  var xml = $(data),
+      username = $('lfm > user name', xml).text();
+  
+  console.log(username);
+  history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
+  
+  drawGraph(xml);
+}
+
+
+function clickError(evt, xhr, status, error){
+  handleError(error);
+}
+
+
+function handleError(error_message){
+  if (error_message == "Bad Request")
+    $("#body-search input").attr("placeholder", "User not found.");
+  else
+    $("#body-search input").attr("placeholder", "Connection to Last.fm failed.");
+  
+  $("#header-search").fadeOut("normal");
+  $("#user-nav").fadeOut("normal", function() {
+    $("#user-nav").empty();
+  });
+  $("#loader").fadeOut("normal", function() {
+    $("#body-search").fadeIn("normal");
+    $("#body-search input").focus();
+  });
+}
+
+
+function drawGraph(xml){
   console.log(xml);
   
   var username = $('lfm > user name', xml).text(),
@@ -114,7 +203,6 @@ function success(evt, xml, status, xhr){
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   });
-  
  
   $("#loader").fadeOut("normal", function() {
     $("#user-nav").fadeIn("normal");
@@ -122,44 +210,3 @@ function success(evt, xml, status, xhr){
     $("#canvas").fadeIn("slow");
   });
 }
-
-function error(evt, xhr, status, error){
-  if (error == "Bad Request")
-    $("#body-search input").attr("placeholder", "User not found.");
-  else
-    $("#body-search input").attr("placeholder", "Connection to Last.fm failed.");
-    
-  $("#loader").fadeOut("normal", function() {
-    $("#body-search").fadeIn("normal");
-    $("#body-search input").focus();
-  });
-}
-
-$('#body-search')
-  .submit(function(){
-    audio.play();
-    $("#body-search").fadeOut("normal", function() {
-      $(this).children('input').val("");
-      $("#loader").fadeIn("normal");
-    });
-  })
-  .bind("ajax:success", success)
-  .bind("ajax:error", error);
-
-$('#header-search')
-  .submit(function(){
-    audio.play();
-    
-    $("#header-search").fadeOut("normal", function() {
-      $(this).children('input').val("");
-      $("#loader").fadeIn("normal");
-    });
-    $("#user-nav").fadeOut("normal", function() {
-      $("#user-nav").empty();
-    });
-    $("#canvas").fadeOut("normal", function() {
-      $("#canvas").empty();
-    });
-  })
-  .bind("ajax:success", success)
-  .bind("ajax:error", error);

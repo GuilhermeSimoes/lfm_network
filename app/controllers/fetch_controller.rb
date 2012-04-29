@@ -3,9 +3,14 @@ class FetchController < ApplicationController
   end
   
   def user
-    respond_to do |format|      
+    respond_to do |format|
+      format.html {
+        @username = params[:user]
+        render 'index'
+      }
       format.xml {
-        username = params[:q].gsub(' ','+')
+        username = params[:user].gsub(' ','+')
+        
         get_info_url = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=#{username}&api_key=#{API_KEY}"
         get_friends_url = "http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=#{username}&api_key=#{API_KEY}&limit=20"
         
