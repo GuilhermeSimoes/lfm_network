@@ -27,6 +27,7 @@ $('#body-search')
   .submit(function(e){
     audio.play();
     var username = $("#body-search").children('input').val();
+    history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
     $("#body-search").fadeOut("normal", function() {
       $(this).children('input').val("");
       $("#loader").fadeIn("normal");
@@ -40,36 +41,24 @@ $('#header-search')
   .submit(function(e){
     audio.play();
     var username = $("#header-search").children('input').val();
+    history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
     $("#header-search").fadeOut("normal", function() {
       $(this).children('input').val("");
-      $("#loader").fadeIn("normal");
     });
     $("#user-nav").fadeOut("normal", function() {
       $("#user-nav").empty();
     });
     $("#canvas").fadeOut("normal", function() {
       $("#canvas").empty();
+      $("#loader").fadeIn("normal");
     });
   })
   .bind("ajax:success", clickSuccess)
   .bind("ajax:error", clickError);
-  
-/*$('#header-search')
-  .submit(function(){
-    yada yada
-  })
-  .bind("ajax:success", clickSuccess)
-  .bind("ajax:error", clickError);*/
 
 
 function clickSuccess(evt, data, status, xhr){
-  var xml = $(data),
-      username = $('lfm > user name', xml).text();
-  
-  console.log(username);
-  history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
-  
-  drawGraph(xml);
+  drawGraph($(data));
 }
 
 
@@ -84,10 +73,6 @@ function handleError(error_message){
   else
     $("#body-search input").attr("placeholder", "Connection to Last.fm failed.");
   
-  $("#header-search").fadeOut("normal");
-  $("#user-nav").fadeOut("normal", function() {
-    $("#user-nav").empty();
-  });
   $("#loader").fadeOut("normal", function() {
     $("#body-search").fadeIn("normal");
     $("#body-search input").focus();
@@ -96,7 +81,7 @@ function handleError(error_message){
 
 
 function drawGraph(xml){
-  console.log(xml);
+  //console.log(xml);
   
   var username = $('lfm > user name', xml).text(),
       url = $('lfm > user url', xml).text(),

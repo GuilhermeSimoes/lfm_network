@@ -12,8 +12,7 @@ $(window).bind('popstate', function(event){
     popped = true;
     if ( initialPop ) return;
     var state = event.originalEvent.state;
-
-    console.log(state);
+    //console.log(state);
     
     if (state == null) {
       
@@ -33,84 +32,46 @@ $(window).bind('popstate', function(event){
       $.ajax({
         data : { user : state.user }
       }).success(function jsSuccess(data, textStatus, jqXHR){
-        drawGraph(data);
+      
+        cleanPage(0, data, null);
+        
+        
       }).error(function jsError(jqXHR, textStatus, errorThrown){
-        handleError(errorThrown);
+        
+        cleanPage(0, null, errorThrown);
+        
       });
       
-      $("#body-search").fadeOut("normal", function() {
-        $(this).children('input').val("");
-      });
-      
-      $("#header-search").fadeOut("normal", function() {
-        $(this).children('input').val("");
-      });
-      $("#user-nav").fadeOut("normal", function() {
-        $("#user-nav").empty();
-      });
-      $("#canvas").fadeOut("normal", function() {
-        $("#canvas").empty();
-        $("#loader").fadeIn("normal");
-      });
+      cleanPage(1, null, null);
       
     }
-      
 });
 
 
-/*
-(function(window,undefined){
-
-    // Prepare
-    var History = window.History;                             // Note: We are using a capital H instead of a lower h  
-    if ( !History.enabled ) {
-        // History.js is disabled for this browser.
-        // This is because we can optionally choose to support HTML4 browsers or not.
-        return false;
-    }
-
-    // Bind to StateChange Event
-    History.Adapter.bind(window, 'statechange', function() {  // Note: We are using statechange instead of popstate
-      var State = History.getState();                         // Note: We are using History.getState() instead of event.state
+function cleanPage(loader, data, errorThrown){
+  $("#user-nav").fadeOut("normal", function() {
+    $("#user-nav").empty();
+  });
+  $("#header-search").fadeOut("normal", function() {
+    $(this).children('input').val("");
+  });
+  $("#body-search").fadeOut("normal", function() {
+    $(this).children('input').val("");
+    $("#canvas").fadeOut("normal", function() {
+      $("#canvas").empty();
       
-      if (State.data.user == undefined) {
+      if (loader == 1) {
+        $("#loader").fadeIn("normal");
+      }
       
-        $("#user-nav").fadeOut("normal", function() {
-          $("#user-nav").empty();
-        });
-        $("#header-search").fadeOut("normal");
-        $("#canvas").fadeOut("normal", function() {
-          $("#canvas").empty();
-          $("#body-search").fadeIn("normal");
-          $("#body-search input").focus();
-        });
-        
+      if (data != null){
+        drawGraph(data);
       }
-      else {
-          
-        $.ajax({
-          data : { user : State.data.user }
-        }).success(function jsSuccess(data, textStatus, jqXHR){
-          drawGraph(data);
-        }).error(function jsError(jqXHR, textStatus, errorThrown){
-          handleError(errorThrown);
-        });
-        
-        $("#body-search").fadeOut("normal", function() {
-          $(this).children('input').val("");
-        });
-        
-        $("#header-search").fadeOut("normal", function() {
-          $(this).children('input').val("");
-        });
-        $("#user-nav").fadeOut("normal", function() {
-          $("#user-nav").empty();
-        });
-        $("#canvas").fadeOut("normal", function() {
-          $("#canvas").empty();
-          $("#loader").fadeIn("normal");
-        });
-        
+      
+      else if (errorThrown != null){
+        handleError(errorThrown);
       }
+      
     });
-})(window);*/
+  });
+}
