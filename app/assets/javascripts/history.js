@@ -1,8 +1,8 @@
 $.ajaxSetup({
-  type    : "POST",
-  dataType: "xml",
-  url     : "fetch_user",
-  data    : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
+  type     : "POST",
+  dataType : "xml",
+  url      : "fetch_user",
+  data     : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
 });
 
 
@@ -34,7 +34,6 @@ $(window).bind('popstate', function(event){
       }).success(function jsSuccess(data, textStatus, jqXHR){
       
         cleanPage(0, data, null);
-        
         
       }).error(function jsError(jqXHR, textStatus, errorThrown){
         

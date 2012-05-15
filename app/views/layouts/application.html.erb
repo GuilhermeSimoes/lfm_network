@@ -17,7 +17,7 @@
 
   <div id="header">
     <div id="user-nav"></div>
-    <%= link_to image_tag('logo-red.png', :alt => "Last.fm Network"), root_path, :title => "Last.fm Network", :id => "logo" %>
+    <%= link_to image_tag('logo-red.png', :alt => "Last.fm Network"), root_path, :id => "logo" %>
     <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'header-search', :style => "display: none" do %>
       <%= text_field_tag :user, nil, :id => nil, :placeholder => "Type the name of a user..." %>
     <% end %>
