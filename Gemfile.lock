@@ -56,13 +56,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.18)
     multi_json (1.2.0)
+    newrelic_rpm (3.3.4.1)
     nokogiri (1.5.2-x86-mingw32)
     pg (0.13.2-x86-mingw32)
     polyglot (0.3.3)
-    processingjs (0.0.1)
-      execjs
-      processingjs-source
-    processingjs-source (0.0.1)
     rack (1.3.6)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -124,9 +121,9 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.1.0)
   jquery-rails
+  newrelic_rpm
   nokogiri
   pg
-  processingjs
   rails (= 3.1.4)
   rake (= 0.8.7)
   sass-rails (= 3.1.4)

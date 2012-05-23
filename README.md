@@ -7,4 +7,4 @@ Technologies used:
 * HTML + CSS
 * Ruby on Rails
 
-Try it out [here](http://lfm-network.herokuapp.com/)!
+Wish I had more time to finish this. In the meantime, try it out [here](http://lfm-network.herokuapp.com/)!
