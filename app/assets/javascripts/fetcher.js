@@ -2,23 +2,11 @@ var audio = document.getElementsByTagName("audio")[0];
 
 
 $(document).ready(function() {
-  var username = $("#user-page").val();
-  
-  if (username == ""){
+  if (username == "") {
     $("#body-search").show();
   }
   else {
     $("#loader").show();
-    
-    $.ajax({
-      data : { user : username }
-    }).success(function jsSuccess(data, textStatus, jqXHR){
-      drawGraph(data);
-    }).error(function jsError(jqXHR, textStatus, errorThrown){
-      handleError(errorThrown);
-    });
-    
-    history.replaceState({user:username}, username+"'s Network");
   }
 });
 

@@ -7,12 +7,10 @@
 	<source src="audio/click.wav"></source>
 </audio>
 
-<input type="hidden" id="user-page" value="<%= @username %>" />
-
 <div class="center-wrapper">
   <div class="centered">
     <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search', :style => "display: none" do %>
-      <%= text_field_tag :user, nil, :id => nil, :autofocus => "true", :placeholder => "Type the name of a user..." %>
+      <%= text_field_tag :user, nil, :id => nil, :placeholder => "Type the name of a user..." %>
       <%-# :type => "search" -%>
     <% end %>
 
@@ -21,3 +19,7 @@
 </div>
 
 <div id="canvas"></div>
+
+<%= javascript_tag do %>
+  window.username = "<%= @username %>";
+<% end %>

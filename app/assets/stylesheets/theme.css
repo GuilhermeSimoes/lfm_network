@@ -58,6 +58,10 @@ body {
   display:block;
   font-size:22px;
   padding:2px;
+  -webkit-transition: background .2s ease-in-out;
+  -moz-transition: background .2s ease-in-out;
+  -o-transition: background .2s ease-in-out;
+  transition: background .2s ease-in-out;
 }
 
 #user-nav a:link, #user-nav a:visited {
@@ -70,10 +74,6 @@ body {
   background-color:#EEEEEE;
   border-color:#EEEEEE;
   background-color:rgba(250,250,250,0.6);
-  border: 2px solid rgba(250,250,250,0.1);
-  padding-top:0px;
-  padding-bottom:0px;
-  padding-left:0px;
 }
 
 #header-search {
@@ -100,6 +100,7 @@ noscript {
   width:20em;
   margin-left:-10em;
   font-size:1.4em;
+  color:#B85A53;
 }
 
 #loader {
@@ -124,6 +125,10 @@ noscript {
   box-shadow:0 0 10px rgba(0,0,0,0.8);
   -moz-box-shadow:0 0 10px rgba(0,0,0,0.8);
   -webkit-box-shadow:0 0 10px rgba(0,0,0,0.8);
+}
+
+#body-search input:focus {
+  outline:none;
 }
 
 #canvas {
