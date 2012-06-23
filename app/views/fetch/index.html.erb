@@ -9,12 +9,12 @@
 
 <div class="center-wrapper">
   <div class="centered">
-    <%= form_tag fetch_user_path, :remote => true, :'data-type' => 'xml', :id => 'body-search', :style => "display: none" do %>
-      <%= text_field_tag :user, nil, :id => nil, :placeholder => "Type the name of a user..." %>
-      <%-# :type => "search" -%>
+    <%= form_tag fetch_user_path, remote: true, data: { type: 'xml' }, id: 'body-search' do %>
+      <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user..." %>
+      <%-# type: "search" -%>
     <% end %>
 
-    <%=	image_tag 'wait.gif', :alt => 'Loading... Please wait.', :id => 'loader', :style => "display: none" %>
+    <%=	image_tag 'wait.gif', alt: 'Loading... Please wait.', id: 'loader' %>
   </div>
 </div>
 

@@ -78,6 +78,7 @@ body {
 
 #header-search {
   position:absolute;
+  display:none;
   top:20px;
   right:25px;
 }
@@ -104,11 +105,13 @@ noscript {
 }
 
 #loader {
+  display:none;
   padding-top:50%;
   margin-top:-75px;
 }
 
 #body-search {
+  display:none;
   padding-top:50%;
   margin-top:-22px;
 }
@@ -146,12 +149,8 @@ div.centered {
   line-height:normal;
 }
 
-text {
-  font: 10px sans-serif;
-}
-
 line.link {
-  stroke: #ccc;
+  stroke:#ccc;
 }
 
 /*circle.node {
@@ -159,3 +158,14 @@ line.link {
   stroke: #fff;
   stroke-width:1.5px;
 }*/
+
+text {
+  font:10px sans-serif;
+  pointer-events:none;
+}
+
+text.shadow {
+  stroke:#fff;
+  stroke-width:3px;
+  stroke-opacity:0.8;
+}

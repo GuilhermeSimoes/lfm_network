@@ -69,7 +69,7 @@ function handleError(error_message){
 
 
 function drawGraph(xml){
-  //console.log(xml);
+  console.log(xml);
   
   var username = $('lfm > user name', xml).text(),
       url = $('lfm > user url', xml).text(),
@@ -81,8 +81,9 @@ function drawGraph(xml){
       h = screen.height-200,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
-      c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl),
-      force = d3.layout.force()
+      c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl);
+  
+  var force = d3.layout.force()
               .gravity(.01)
               .charge(-120)
               .size([w, h])
@@ -95,10 +96,19 @@ function drawGraph(xml){
     .attr("height", h);
   
   var i, n = $('user', xml).length;
+  var user;
   
   var nodes = [];
   for (i=0; i < n; i++) {
-    nodes.push({"taste": $("score", xml).eq(i).text(), "name": $("name", xml).eq(i).text()});
+    user = $("user", xml).eq(i);
+    nodes.push({
+                "taste": $("score", user).text(),
+                "name": $("name", user).text(),
+                "small_image": $("image", user).eq(0).text(),
+                "medium_image": $("image", user).eq(1).text(),
+                "large_image": $("image", user).eq(2).text(),
+                "extralarge_image": $("image", user).eq(3).text()
+              });
   }
   
   var links = [];
@@ -109,38 +119,41 @@ function drawGraph(xml){
   force
     .nodes(nodes)
     .links(links)
+    .on("tick", tick)
     .start();
       
-  var link = canvas.selectAll("line")
+  var link = canvas.append("svg:g").selectAll("line")
     .data(links)
     .enter().append("svg:line")
-    .attr("class", "link")
-    .attr("x1", function(d) { return d.source.x; })
-    .attr("y1", function(d) { return d.source.y; })
-    .attr("x2", function(d) { return d.target.x; })
-    .attr("y2", function(d) { return d.target.y; });
+    .attr("class", "link");
       
-  var node = canvas.selectAll("circle")
+  var node = canvas.append("svg:g").selectAll("circle")
     .data(nodes)
-    .enter()/*.append("svg:a")
-            .attr("xlink:href", function(d) { return "http://localhost:3000"; })*/
-    .append("svg:circle")
+    .enter().append("svg:circle")
     .attr("class", "node")
-    .attr("cx", function(d) { return d.x })
-    .attr("cy", function(d) { return d.y })
-    .attr("r", function(d) { return r(d.taste) })
+    .attr("r", function(d) { return r(d.taste); })
     .attr("stroke-width", "none")
-    .attr("fill", function() { return c(Math.random()) })
-    .attr("fill-opacity", .5)
-    .on('mouseover', function() {
-                      var circle = d3.select(this);
-                      circle.attr("fill-opacity", 0.7);
-                    })
-    .on("mouseout", function() {
-                      var circle = d3.select(this);
-                      circle.attr("fill-opacity", 0.5);
-                    })
-    .call(force.drag);
+    .attr("fill", function() { return c(Math.random()); })
+    .attr("fill-opacity", 0.5)
+    .on('mouseover', function() { d3.select(this).attr("fill-opacity", 0.7); })
+    .on("mouseout", function() { d3.select(this).attr("fill-opacity", 0.5); })
+    .call(force.drag)
+    .on("click", showNode);
+    //dblclick
+
+
+  var text = canvas.append("svg:g").selectAll("g")
+    .data(nodes)
+    .enter().append("svg:g");
+
+  text.append("svg:text")
+    .attr("x", function(d) {
+            return -2.3 * d.name.length;
+          })
+    .attr("y", ".40em")
+    .text(function(d) { return d.name; });
+
+
     
   /*canvas.append("text")
     .attr("class", "title")
@@ -160,11 +173,17 @@ function drawGraph(xml){
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
     .text("asd"); */
-    
-  node.append("title")
-    .text(function(d) { return d.name; });
 
-  force.on("tick", function() {
+
+  function showNode(d, i) {
+    //console.log(d);
+    //console.log(i);
+    //console.log(d.name.length);
+    //$("#footer").append('<img alt="User photo" src="'+d.small_image+'">');
+  }
+
+
+  function tick() {
     nodes[0].x = w / 2;
     nodes[0].y = h / 2;
 
@@ -175,7 +194,11 @@ function drawGraph(xml){
   
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
-  });
+
+    text.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    });
+  }
  
   $("#loader").fadeOut("normal", function() {
     $("#user-nav").fadeIn("normal");

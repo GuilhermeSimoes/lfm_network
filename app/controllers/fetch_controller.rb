@@ -53,9 +53,9 @@ class FetchController < ApplicationController
           # puts e.backtrace.join("\n")
         
           if e.message == '400 Bad Request'
-            render xml: { :error => 'User not found.' }, :status => 400
+            render xml: { error: 'User not found.' }, status: 400
           else
-            render xml: { :error => 'Connection to Last.fm failed.' }, :status => 500
+            render xml: { error: 'Connection to Last.fm failed.' }, status: 500
           end
         else
           render xml: builder.to_xml
