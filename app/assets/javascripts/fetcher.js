@@ -1,18 +1,16 @@
 var audio = document.getElementsByTagName("audio")[0];
 
 
-$(document).ready(function() {
-  if (username == "") {
-    $("#body-search").show();
-  }
-  else {
-    $("#loader").show();
-  }
-});
+if (username == "") {
+  $("#body-search").show();
+}
+else {
+  $("#loader").show();
+}
 
 
 $('#body-search')
-  .submit(function(e){
+  .submit(function() {
     audio.play();
     var username = $("#body-search").children('input').val();
     history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
@@ -26,7 +24,7 @@ $('#body-search')
 
   
 $('#header-search')
-  .submit(function(e){
+  .submit(function(){
     audio.play();
     var username = $("#header-search").children('input').val();
     history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
@@ -78,7 +76,7 @@ function drawGraph(xml){
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
   
   var w = screen.width-20,
-      h = screen.height-200,
+      h = screen.height-230,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
       c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl);
@@ -104,6 +102,8 @@ function drawGraph(xml){
     nodes.push({
                 "taste": $("score", user).text(),
                 "name": $("name", user).text(),
+                "realname": $("realname", user).text(),
+                "url": $("url", user).text(),
                 "small_image": $("image", user).eq(0).text(),
                 "medium_image": $("image", user).eq(1).text(),
                 "large_image": $("image", user).eq(2).text(),
@@ -176,7 +176,7 @@ function drawGraph(xml){
 
 
   function showNode(d, i) {
-    //console.log(d);
+    console.log(d);
     //console.log(i);
     //console.log(d.name.length);
     //$("#footer").append('<img alt="User photo" src="'+d.small_image+'">');
