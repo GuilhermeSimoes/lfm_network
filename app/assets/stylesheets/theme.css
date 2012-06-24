@@ -80,7 +80,6 @@ body {
 }
 
 #content {
-  padding-bottom: 50px;
 }
 
 #footer {
@@ -146,6 +145,10 @@ noscript {
 
 .centered {
   display:inline-block;
+}
+
+svg {
+  display:block;
 }
 
 line.link {

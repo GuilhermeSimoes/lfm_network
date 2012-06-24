@@ -1,12 +1,22 @@
 var audio = document.getElementsByTagName("audio")[0];
 
+/*console.log("innerHeight: " + window.innerHeight +
+              "\navailHeight: " + screen.availHeight +
+              "\nheight: " + screen.height +
+              "\ninnderWidth: " + window.innerWidth +
+              "\navailWidth: " + screen.availWidth +
+              "\nwidth: " + screen.width
+              );*/
 
-if (username == "") {
-  $("#body-search").show();
-}
-else {
-  $("#loader").show();
-}
+
+$(document).ready(function() {
+  if (username == "") {
+    $("#body-search").show();
+  }
+  else {
+    $("#loader").show();
+  }
+});
 
 
 $('#body-search')
@@ -76,7 +86,7 @@ function drawGraph(xml){
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
   
   var w = screen.width-20,
-      h = screen.height-230,
+      h = window.innerHeight-80,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
       c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl);
