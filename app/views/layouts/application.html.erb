@@ -24,11 +24,12 @@
   </div>
 
   <div id="content">
-		<%= yield %>
-	</div>
+    <%= yield %>
+  </div>
   
   <div id="footer">
-	</div>
+    <span>&copy; <%= Time.now.year %> Guilherme Sim&otilde;es</span>
+  </div>
 
   <%= javascript_include_tag "application" %>
 </body>
