@@ -1,11 +1,3 @@
-$.ajaxSetup({
-  type     : "POST",
-  dataType : "xml",
-  url      : "fetch_user",
-  data     : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
-});
-
-
 var popped = ('state' in window.history), initialURL = location.href;
 $(window).bind('popstate', function(event){
     var initialPop = !popped && location.href == initialURL;
@@ -52,44 +44,17 @@ $(window).bind('popstate', function(event){
         data : { user : state.user }
       }).success(function jsSuccess(data, textStatus, jqXHR){
       
-        cleanPage(0, data, null);
+        drawGraph(data);
         
       }).error(function jsError(jqXHR, textStatus, errorThrown){
         
-        cleanPage(0, null, errorThrown);
+        handleError(errorThrown);
         
       });
       
-      cleanPage(1, null, null);
+      cleanPage(function(){
+        $("#loader").fadeIn("normal");
+      });
       
     }
 });
-
-
-function cleanPage(loader, data, errorThrown){
-  $("#user-nav").fadeOut("normal", function() {
-    $("#user-nav").empty();
-  });
-  $("#header-search").fadeOut("normal", function() {
-    $(this).children('input').val("");
-  });
-  $("#body-search").fadeOut("normal", function() {
-    $(this).children('input').val("");
-    $("#canvas").fadeOut("normal", function() {
-      $("#canvas").empty();
-      
-      if (loader == 1) {
-        $("#loader").fadeIn("normal");
-      }
-      
-      if (data != null){
-        drawGraph(data);
-      }
-      
-      else if (errorThrown != null){
-        handleError(errorThrown);
-      }
-      
-    });
-  });
-}

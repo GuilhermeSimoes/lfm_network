@@ -6,7 +6,7 @@ class FetchController < ApplicationController
     respond_to do |format|
       format.html {
         @username = params[:user]
-        render 'index'
+        render :index
       }
       format.xml {
         username = params[:user].gsub(' ','+')

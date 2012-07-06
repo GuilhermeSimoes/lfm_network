@@ -1,5 +1,12 @@
 var audio = document.getElementsByTagName("audio")[0];
 
+$.ajaxSetup({
+  type     : "POST",
+  dataType : "xml",
+  url      : "fetch_user",
+  data     : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
+});
+
 /*console.log("innerHeight: " + window.innerHeight +
               "\navailHeight: " + screen.availHeight +
               "\nheight: " + screen.height +
@@ -38,14 +45,7 @@ $('#header-search')
     audio.play();
     var username = $("#header-search").children('input').val();
     history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
-    $("#header-search").fadeOut("normal", function() {
-      $(this).children('input').val("");
-    });
-    $("#user-nav").fadeOut("normal", function() {
-      $("#user-nav").empty();
-    });
-    $("#canvas").fadeOut("normal", function() {
-      $("#canvas").empty();
+    cleanPage(function(){
       $("#loader").fadeIn("normal");
     });
   })
@@ -148,9 +148,7 @@ function drawGraph(xml){
     .on('mouseover', function() { d3.select(this).attr("fill-opacity", 0.7); })
     .on("mouseout", function() { d3.select(this).attr("fill-opacity", 0.5); })
     .call(force.drag)
-    .on("click", showNode);
-    //dblclick
-
+    .on("click", showNode)    //dblclick
 
   var text = canvas.append("svg:g").selectAll("g")
     .data(nodes)
@@ -164,38 +162,32 @@ function drawGraph(xml){
     .text(function(d) { return d.name; });
 
 
-    
-  /*canvas.append("text")
-    .attr("class", "title")
-    .attr("dy", ".71em")
-    .attr("cx", 1)
-    .attr("cy", 1)
-    .text(2000);
-    
-  node.append("text")
-    .attr("text-anchor", "middle")
-    .attr("dy", "1em")
-    .text(function(d) { return d.name.substring(0, d.r / 3); });
-    
-  node.selectAll("text")
-    .data(nodes)
-    .enter().append("text")
-    .attr("dy", ".35em")
-    .attr("text-anchor", "middle")
-    .text("asd"); */
-
-
   function showNode(d, i) {
-    console.log(d);
-    //console.log(i);
-    //console.log(d.name.length);
-    //$("#footer").append('<img alt="User photo" src="'+d.small_image+'">');
+    var username = d.name;
+    history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
+
+    $.ajax({
+      data : { user : username }
+    }).success(function jsSuccess(data, textStatus, jqXHR){
+    
+      drawGraph(data);
+      
+    }).error(function jsError(jqXHR, textStatus, errorThrown){
+      
+      handleError(errorThrown);
+      
+    });
+    
+    cleanPage(function(){
+      $("#loader").fadeIn("normal");
+    });
+
   }
 
 
   function tick() {
     nodes[0].x = w / 2;
-    nodes[0].y = h / 2;
+    nodes[0].y = (h - 40) / 2;
 
     link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
@@ -213,6 +205,28 @@ function drawGraph(xml){
   $("#loader").fadeOut("normal", function() {
     $("#user-nav").fadeIn("normal");
     $("#header-search").fadeIn("normal");
+    $("#header-search > input").blur();
     $("#canvas").fadeIn("slow");
+  });
+}
+
+
+function cleanPage(callback){
+  $("#user-nav").fadeOut("normal", function() {
+    $("#user-nav").empty();
+  });
+  $("#header-search").fadeOut("normal", function() {
+    $(this).children('input').val("");
+  });
+  $("#body-search").fadeOut("normal", function() {
+    $(this).children('input').val("");
+    $("#canvas").fadeOut("normal", function() {
+      $("#canvas").empty();
+
+      if(typeof callback == 'function') {
+        callback();
+      }
+
+    });
   });
 }
