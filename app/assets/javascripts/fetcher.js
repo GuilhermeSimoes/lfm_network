@@ -187,7 +187,7 @@ function drawGraph(xml){
 
   function tick() {
     nodes[0].x = w / 2;
-    nodes[0].y = (h - 40) / 2;
+    nodes[0].y = (h - 100) / 2;
 
     link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
