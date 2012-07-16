@@ -69,7 +69,6 @@ body {
 
 #header-search {
   position:absolute;
-  display:none;
   top:20px;
   right:25px;
 }
@@ -105,15 +104,14 @@ noscript {
 }
 
 #loader {
-  display:none;
-  padding-top:50%;
-  margin-top:-75px;
+  display:block;
+  margin:15% auto 0 auto;
+  width:450px;
 }
 
 #body-search {
-  display:none;
-  padding-top:50%;
-  margin-top:-22px;
+  margin:15% auto 0 auto;
+  width:27.2em;
 }
 
 #body-search input {
@@ -136,15 +134,6 @@ noscript {
 
 #canvas {
   padding-top:10px;
-}
-
-.center-wrapper {
-  text-align:center;
-  height:0px;
-}
-
-.centered {
-  display:inline-block;
 }
 
 svg {

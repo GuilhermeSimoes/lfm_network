@@ -7,16 +7,12 @@
 	<source src="audio/click.wav"></source>
 </audio>
 
-<div class="center-wrapper">
-  <div class="centered">
-    <%= form_tag fetch_user_path, remote: true, data: { type: 'xml' }, id: 'body-search' do %>
-      <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user..." %>
-      <%-# type: "search" -%>
-    <% end %>
+<%= form_tag fetch_user_path, remote: true, data: { type: 'xml' }, id: 'body-search', style: 'display:none' do %>
+  <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user..." %>
+  <%-# type: "search" -%>
+<% end %>
 
-    <%=	image_tag 'wait.gif', alt: 'Loading... Please wait.', id: 'loader' %>
-  </div>
-</div>
+<%=	image_tag 'wait.gif', alt: 'Loading... Please wait.', id: 'loader', style: 'display:none' %>
 
 <div id="canvas"></div>
 
