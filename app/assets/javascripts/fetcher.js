@@ -86,7 +86,7 @@ function drawGraph(xml){
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
   
   var w = screen.width-20,
-      h = window.innerHeight-80,
+      h = window.innerHeight,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
       c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl);

@@ -15,19 +15,19 @@
 </head>
 <body>
 
-  <div id="header">
+  <div class="header">
     <div id="user-nav"></div>
-    <%= link_to image_tag('logo-red.png', alt: "Last.fm Network"), root_path, id: "logo" %>
+    <%= link_to image_tag('logo-red.png', alt: "Last.fm Network"), root_path, class: "logo" %>
     <%= form_tag fetch_user_path, remote: true, data: { type: 'xml' }, id: 'header-search', style: 'display:none' do %>
       <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user..." %>
     <% end %>
   </div>
 
-  <div id="content">
+  <div class="content">
     <%= yield %>
   </div>
   
-  <div id="footer">
+  <div class="footer">
     <span>&copy; <%= Time.now.year %> Guilherme Sim&otilde;es</span>
   </div>
 
