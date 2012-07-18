@@ -7,13 +7,13 @@ $.ajaxSetup({
   data     : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
 });
 
-/*console.log("innerHeight: " + window.innerHeight +
+console.log("innerHeight: " + window.innerHeight +
               "\navailHeight: " + screen.availHeight +
               "\nheight: " + screen.height +
               "\ninnderWidth: " + window.innerWidth +
               "\navailWidth: " + screen.availWidth +
               "\nwidth: " + screen.width
-              );*/
+              );
 
 
 $(document).ready(function() {
@@ -85,7 +85,7 @@ function drawGraph(xml){
   
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
   
-  var w = screen.width-20,
+  var w = window.innerWidth-18,
       h = window.innerHeight,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
@@ -187,7 +187,7 @@ function drawGraph(xml){
 
   function tick() {
     nodes[0].x = w / 2;
-    nodes[0].y = (h - 100) / 2;
+    nodes[0].y = h / 2  * 0.88;
 
     link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
