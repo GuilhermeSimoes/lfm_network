@@ -1,18 +1,18 @@
 var audio = document.getElementsByTagName("audio")[0];
 
 $.ajaxSetup({
-  type     : "POST",
-  dataType : "xml",
-  url      : "fetch_user",
-  data     : {'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')}
+  type     : 'POST',
+  headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+  dataType : 'xml',
+  url      : 'fetch_user'
 });
 
-console.log("innerHeight: " + window.innerHeight +
-              "\navailHeight: " + screen.availHeight +
-              "\nheight: " + screen.height +
-              "\ninnderWidth: " + window.innerWidth +
-              "\navailWidth: " + screen.availWidth +
-              "\nwidth: " + screen.width
+console.log(  'innerHeight: '   + window.innerHeight  + '\n' +
+              'navailHeight: '  + screen.availHeight  + '\n' +
+              'nheight: '       + screen.height       + '\n' +
+              'ninnerWidth: '   + window.innerWidth   + '\n' +
+              'navailWidth: '   + screen.availWidth   + '\n' +
+              'nwidth: '        + screen.width
               );
 
 
