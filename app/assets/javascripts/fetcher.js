@@ -7,14 +7,13 @@ $.ajaxSetup({
   url      : 'fetch_user'
 });
 
-console.log(  'innerHeight: '   + window.innerHeight  + '\n' +
-              'navailHeight: '  + screen.availHeight  + '\n' +
-              'nheight: '       + screen.height       + '\n' +
-              'ninnerWidth: '   + window.innerWidth   + '\n' +
-              'navailWidth: '   + screen.availWidth   + '\n' +
-              'nwidth: '        + screen.width
-              );
-
+// console.log('innerHeight: ' + window.innerHeight + '\n' +
+//             'availHeight: ' + screen.availHeight + '\n' +
+//             'height: '      + screen.height      + '\n' +
+//             'innerWidth: '  + window.innerWidth  + '\n' +
+//             'availWidth: '  + screen.availWidth  + '\n' +
+//             'width: '       + screen.width
+//             );
 
 $(document).ready(function() {
   if (username == "") {
@@ -32,14 +31,14 @@ $('#body-search')
     var username = $("#body-search").children('input').val();
     history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
     $("#body-search").fadeOut("normal", function() {
-      $(this).children('input').val("");
       $("#loader").fadeIn("normal");
+      $(this).children("input").val("");
     });
   })
   .bind("ajax:success", clickSuccess)
   .bind("ajax:error", clickError);
 
-  
+
 $('#header-search')
   .submit(function(){
     audio.play();
@@ -59,16 +58,14 @@ function clickSuccess(evt, data, status, xhr){
 
 
 function clickError(evt, xhr, status, error){
-  handleError(error);
+  handleError(xhr);
 }
 
 
-function handleError(error_message){
-  if (error_message == "Bad Request")
-    $("#body-search input").attr("placeholder", "User not found.");
-  else
-    $("#body-search input").attr("placeholder", "Connection to Last.fm failed.");
-  
+function handleError(error){
+  var error_message = $('error', error.responseText).text();
+  $("#body-search input").attr("placeholder", error_message);
+
   $("#loader").fadeOut("normal", function() {
     $("#body-search").fadeIn("normal");
     $("#body-search input").focus();
@@ -77,20 +74,18 @@ function handleError(error_message){
 
 
 function drawGraph(xml){
-  console.log(xml);
-  
   var username = $('lfm > user name', xml).text(),
       url = $('lfm > user url', xml).text(),
       img = $('lfm > user image[size="small"]', xml).text();
-  
+
   $("#user-nav").append('<a href="'+url+'" title="User\'s Last.fm profile"><img alt="User photo" src="'+img+'">'+username+'</a>');
-  
+
   var w = window.innerWidth-18,
       h = window.innerHeight,
       l = d3.scale.pow().exponent(3).domain([0,1]).range([250,40]),
       r = d3.scale.linear().domain([0,1]).range([8,26]),
       c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "hsl(350, 100%, 50%)"]).interpolate(d3.interpolateHsl);
-  
+
   var force = d3.layout.force()
               .gravity(.01)
               .charge(-120)
@@ -98,14 +93,14 @@ function drawGraph(xml){
               .linkDistance(function(link){
                 return l(link.source.taste);
               });
-              
+
   var canvas = d3.select("#canvas").append("svg:svg")
     .attr("width", w)
     .attr("height", h);
-  
+
   var i, n = $('user', xml).length;
   var user;
-  
+
   var nodes = [];
   for (i=0; i < n; i++) {
     user = $("user", xml).eq(i);
@@ -120,23 +115,23 @@ function drawGraph(xml){
                 "extralarge_image": $("image", user).eq(3).text()
               });
   }
-  
+
   var links = [];
   for (i=1; i < n; i++) {
     links.push({"source": nodes[i], "target": nodes[0]});
   }
-  
+
   force
     .nodes(nodes)
     .links(links)
     .on("tick", tick)
     .start();
-      
+
   var link = canvas.append("svg:g").selectAll("line")
     .data(links)
     .enter().append("svg:line")
     .attr("class", "link");
-      
+
   var node = canvas.append("svg:g").selectAll("circle")
     .data(nodes)
     .enter().append("svg:circle")
@@ -161,7 +156,6 @@ function drawGraph(xml){
     .attr("y", ".40em")
     .text(function(d) { return d.name; });
 
-
   function showNode(d, i) {
     var username = d.name;
     history.pushState({user:username}, username+"'s Network", "fetch?user="+username);
@@ -169,15 +163,15 @@ function drawGraph(xml){
     $.ajax({
       data : { user : username }
     }).success(function jsSuccess(data, textStatus, jqXHR){
-    
+
       drawGraph(data);
-      
+
     }).error(function jsError(jqXHR, textStatus, errorThrown){
-      
-      handleError(errorThrown);
-      
+
+      handleError(jqXHR);
+
     });
-    
+
     cleanPage(function(){
       $("#loader").fadeIn("normal");
     });
@@ -193,7 +187,7 @@ function drawGraph(xml){
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-  
+
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
 
@@ -201,7 +195,7 @@ function drawGraph(xml){
       return "translate(" + d.x + "," + d.y + ")";
     });
   }
- 
+
   $("#loader").fadeOut("normal", function() {
     $("#user-nav").fadeIn("normal");
     $("#header-search").fadeIn("normal");
