@@ -6,6 +6,7 @@ gem 'rake', '~> 10.1.0'
 gem 'rails', '~> 3.2.14'
 gem 'nokogiri', '~> 1.6.0'
 gem 'jquery-rails', '~> 2.3.0'
+gem 'figaro', '~> 0.7'
 
 group :production do
   gem 'thin', '~> 1.5.1'

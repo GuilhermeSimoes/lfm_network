@@ -1,0 +1,8 @@
+# You should have a file like this (without the template extension) in your /config folder.
+# It must not be checked into source control.
+
+# Generate a secret token with the `rake secret` command
+SECRET_TOKEN: 'CLASSIFIED'
+
+# Get your Last.fm API key at http://www.last.fm/api
+LAST_FM_API_KEY: 'CLASSIFIED'
