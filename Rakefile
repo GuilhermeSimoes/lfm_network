@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-LfmNetwork::Application.load_tasks
+LastfmNetwork::Application.load_tasks

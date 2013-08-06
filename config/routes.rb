@@ -1,4 +1,4 @@
-LfmNetwork::Application.routes.draw do
+LastfmNetwork::Application.routes.draw do
   post "fetch_user" => 'fetch#user', as: 'fetch_user'
   get "/fetch" => 'fetch#user'
   
