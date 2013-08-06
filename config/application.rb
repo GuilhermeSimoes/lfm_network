@@ -42,7 +42,13 @@ module LastfmNetwork
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Force the application not to access the DB or load models when precompiling assets.
+    config.assets.initialize_on_precompile = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Prevents ApplicationController from loading all the helpers.
+    config.action_controller.include_all_helpers = false
   end
 end
