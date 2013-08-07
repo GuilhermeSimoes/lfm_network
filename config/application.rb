@@ -1,6 +1,11 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# require 'active_record/railtie'
+require 'action_controller/railtie'
+# require 'action_mailer/railtie'
+require 'active_resource/railtie'
+require 'sprockets/railtie'
+# require 'rails/test_unit/railtie'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -50,5 +55,8 @@ module LastfmNetwork
 
     # Prevents ApplicationController from loading all the helpers.
     config.action_controller.include_all_helpers = false
+
+    config.session_store :cookie_store, key: '_lastfmnetwork_session'
+    config.secret_token = '94cc50252814d850a62c39a0bed77c321bd0e9a2ea568225253d5c48c39ff8702cd03cffd52d9b63effc2a2a8bc7ff2c8cc8ad4175b777144d24e6167024b13b'
   end
 end
