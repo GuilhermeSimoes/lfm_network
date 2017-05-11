@@ -107,7 +107,6 @@ function drawGraph(xml){
     nodes.push({
                 "taste": $("score", user).text(),
                 "name": $("name", user).text(),
-                "realname": $("realname", user).text(),
                 "url": $("url", user).text(),
                 "small_image": $("image", user).eq(0).text(),
                 "medium_image": $("image", user).eq(1).text(),

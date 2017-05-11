@@ -24,7 +24,6 @@ class FetchController < ApplicationController
               xml.user {
                 user = info_xml.at_xpath('//user')
                 xml << user.at_xpath('name').to_xml
-                xml << user.at_xpath('realname').to_xml
                 xml << user.at_xpath('url').to_xml
                 xml << user.at_xpath('playcount').to_xml
                 xml << user.xpath('image').to_xml
@@ -36,7 +35,6 @@ class FetchController < ApplicationController
                 friends_xml.xpath('lfm/friends/user').each do |user|
                   xml.user {
                     xml << user.at_xpath('name').to_xml
-                    xml << user.at_xpath('realname').to_xml
                     xml << user.at_xpath('url').to_xml
                     xml << user.at_xpath('playcount').to_xml
                     xml << user.xpath('image').to_xml
