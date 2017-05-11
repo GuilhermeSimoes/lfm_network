@@ -9,7 +9,7 @@
   </noscript>
 
   <%= form_tag fetch_user_path, remote: true, data: { type: 'xml' }, id: 'body-search', style: 'display:none' do %>
-    <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user..." %>
+    <%= text_field_tag :user, nil, id: nil, placeholder: "Type the name of a user...", autofocus: true %>
     <%-# type: "search" -%>
   <% end %>
 
