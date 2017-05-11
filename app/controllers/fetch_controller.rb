@@ -1,7 +1,6 @@
 class FetchController < ApplicationController
   GET_INFO_URL = "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&api_key=#{ENV['LAST_FM_API_KEY']}&user="
   GET_FRIENDS_URL = "http://ws.audioscrobbler.com/2.0/?method=user.getfriends&api_key=#{ENV['LAST_FM_API_KEY']}&limit=20&user="
-  TASTEOMETER_URL = "http://ws.audioscrobbler.com/2.0/?method=tasteometer.compare&api_key=#{ENV['LAST_FM_API_KEY']}&type1=user&type2=user&value1="
 
   def index
   end
@@ -15,7 +14,6 @@ class FetchController < ApplicationController
       format.xml {
         username = params[:user].gsub(' ','+')
         begin
-          user_tasteometer_url = TASTEOMETER_URL + username + "&value2="
           info_xml = Nokogiri::XML(open(GET_INFO_URL + username))
           friends_xml = Nokogiri::XML(open(GET_FRIENDS_URL + username))
 
@@ -39,8 +37,7 @@ class FetchController < ApplicationController
                     xml << user.at_xpath('playcount').to_xml
                     xml << user.xpath('image').to_xml
 
-                    taste_xml = Nokogiri::XML(open(user_tasteometer_url + user.at_xpath('name').text))
-                    xml << taste_xml.at_xpath('//score').to_xml
+                    xml.score rand(0..1.0)
                   }
                 end
               }
