@@ -7,23 +7,22 @@ $.ajaxSetup({
   url      : 'fetch_user'
 });
 
-// console.log('innerHeight: ' + window.innerHeight + '\n' +
-//             'availHeight: ' + screen.availHeight + '\n' +
-//             'height: '      + screen.height      + '\n' +
-//             'innerWidth: '  + window.innerWidth  + '\n' +
-//             'availWidth: '  + screen.availWidth  + '\n' +
-//             'width: '       + screen.width
-//             );
-
 $(document).ready(function() {
   if (username == "") {
     $("#body-search").show();
   }
   else {
     $("#loader").show();
+
+    $.ajax({
+      data : { user : username }
+    }).success(function jsSuccess(data, textStatus, jqXHR){
+      drawGraph(data);
+    }).error(function jsError(jqXHR, textStatus, errorThrown){
+      handleError(errorThrown);
+    });
   }
 });
-
 
 $('#body-search')
   .submit(function() {
